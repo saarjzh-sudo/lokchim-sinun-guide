@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>המדריך המלא להורים | פתרונות סינון והגנה דיגיטלית — לוקחים אחריות</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #FDF8F0;
+      --cream-alt: #F9F3E8;
+      --navy: #172042;
+      --navy-light: #1E2A5A;
+      --gold: #DFA517;
+      --gold-light: #F5D780;
+      --green: #27AE60;
+      --green-light: #E8F8EF;
+      --red: #E74C3C;
+      --red-light: #FDECEB;
+      --gray-light: #E5E7EB;
+      --white: #FFFFFF;
+      --text: #1F2937;
+      --text-light: #6B7280;
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --shadow-hover: 0 8px 30px rgba(0,0,0,0.12);
+      --radius: 16px;
+      --radius-sm: 12px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Rubik', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      color: var(--white);
+      padding: 40px 24px 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before, .hero::after {
+      content: '';
+      position: absolute;
+      width: 280px; height: 280px;
+      background: var(--gold);
+      border-radius: 50%;
+      filter: blur(80px);
+    }
+    .hero::before { top: -100px; left: -100px; opacity: 0.06; }
+    .hero::after { bottom: -80px; right: -80px; opacity: 0.08; }
+    .hero h1 {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 800;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero p {
+      font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+      opacity: 0.85;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 48px 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .section-title .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--navy);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+    .section-title h2 {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .section-title p {
+      color: var(--text-light);
+      margin-top: 6px;
+      font-size: 0.95rem;
+    }
+
+    /* INTRO VIDEOS */
+    .intro-videos {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .intro-video-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .video-wrap {
+      background: var(--white);
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .video-wrap iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border: none;
+      display: block;
+    }
+    .video-wrap .video-label {
+      padding: 14px 18px;
+    }
+    .video-wrap .video-label h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .video-wrap .video-label p {
+      font-size: 0.82rem;
+      color: var(--text-light);
+      margin-top: 2px;
+    }
+
+    /* ACCORDION */
+    .accordion-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .accordion-item {
+      background: var(--white);
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .accordion-item:hover {
+      box-shadow: var(--shadow-hover);
+    }
+    .accordion-item.open {
+      border-color: var(--gold);
+      box-shadow: 0 4px 24px rgba(223, 165, 23, 0.15);
+    }
+
+    /* Header / trigger */
+    .acc-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 22px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s;
+    }
+    .acc-header:hover {
+      background: var(--cream);
+    }
+    .acc-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .acc-header-text {
+      flex: 1;
+    }
+    .acc-header-text h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .acc-header-text .acc-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .acc-tag {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: var(--cream-alt);
+      color: var(--text-light);
+      font-weight: 500;
+    }
+    .acc-badge-new {
+      background: var(--red);
+      color: white;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+    .acc-arrow {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s;
+      flex-shrink: 0;
+      color: var(--text-light);
+    }
+    .accordion-item.open .acc-arrow {
+      transform: rotate(180deg);
+      color: var(--gold);
+    }
+
+    /* Body / content */
+    .acc-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .acc-body-inner {
+      padding: 0 22px 22px;
+      border-top: 1px solid var(--gray-light);
+    }
+
+    .acc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 18px;
+    }
+    @media (max-width: 700px) {
+      .acc-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Info column */
+    .acc-info { display: flex; flex-direction: column; gap: 12px; }
+    .acc-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.88rem;
+    }
+    .acc-meta-row {
+      display: flex;
+      gap: 8px;
+    }
+    .acc-meta-row .label {
+      color: var(--text-light);
+      min-width: 65px;
+    }
+    .acc-meta-row .val { font-weight: 500; }
+
+    .acc-pros, .acc-cons {
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+    .acc-pros {
+      background: var(--green-light);
+      color: #1B7A3D;
+      border-right: 3px solid var(--green);
+    }
+    .acc-cons {
+      background: var(--red-light);
+      color: #C0392B;
+      border-right: 3px solid var(--red);
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.83rem;
+    }
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chk { color: var(--green); font-weight: 700; }
+    .xmk { color: var(--red); font-weight: 700; }
+
+    /* Video column */
+    .acc-video iframe {
+      width: 100%;
+      aspect-ratio: 9/16;
+      max-height: 420px;
+      border: none;
+      border-radius: var(--radius-sm);
+      display: block;
+      background: #000;
+    }
+
+    /* CTA */
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      padding: 48px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: var(--gold);
+      opacity: 0.08;
+      border-radius: 50%;
+      filter: blur(60px);
+    }
+    .cta-section h2 {
+      color: var(--white);
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 800;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .cta-section p {
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 24px;
+      font-size: 1rem;
+      position: relative;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--green), #219a52);
+      color: white;
+      text-decoration: none;
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 16px 36px;
+      border-radius: 50px;
+      box-shadow: 0 6px 20px rgba(39,174,96,0.35);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .cta-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 28px rgba(39,174,96,0.45);
+    }
+    .cta-btn svg { width: 24px; height: 24px; fill: currentColor; }
+    .cta-phone {
+      display: block;
+      margin-top: 16px;
+      color: var(--gold);
+      font-size: 1.6rem;
+      font-weight: 800;
+      text-decoration: none;
+      direction: ltr;
+      position: relative;
+    }
+
+    /* Floating CTA */
+    .floating-cta {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--green), #219a52);
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 14px 22px;
+      border-radius: 50px;
+      box-shadow: 0 6px 24px rgba(39,174,96,0.4);
+      transition: transform 0.3s;
+      animation: pulse-slow 3s ease-in-out infinite;
+    }
+    .floating-cta:hover { transform: scale(1.08); }
+    .floating-cta svg { width: 22px; height: 22px; fill: currentColor; }
+
+    .footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 20px;
+      font-size: 0.8rem;
+    }
+    .footer a { color: var(--gold); text-decoration: none; }
+
+    @keyframes pulse-slow {
+      0%, 100% { box-shadow: 0 6px 24px rgba(39,174,96,0.4); }
+      50% { box-shadow: 0 6px 32px rgba(39,174,96,0.6); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <h1>המדריך המלא להורים<br/><span>פתרונות סינון והגנה דיגיטלית</span></h1>
+    <p>כל מה שצריך לדעת כדי להגן על הילדים שלכם במרחב הדיגיטלי — לחצו על כל פתרון לפרטים וסרטון הדרכה</p>
+  </header>
+
+  <!-- INTRO VIDEOS -->
+  <section class="section">
+    <div class="section-title">
+      <span class="badge">מאיפה מתחילים?</span>
+      <h2>סרטוני רקע והכנה</h2>
+    </div>
+    <div class="intro-video-row">
+      <div class="video-wrap">
+        <iframe src="https://drive.google.com/file/d/1_ljLM1_9RBdtF8Qw6C8e8JHxi2Z57iyE/preview" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+        <div class="video-label">
+          <h3>הקדמה — למה חשוב לסנן?</h3>
+          <p>סרטון פתיחה על הצורך בבקרת הורים דיגיטלית</p>
+        </div>
+      </div>
+      <div class="video-wrap">
+        <iframe src="https://drive.google.com/file/d/1G_GQdfcRcsmycRFWHkuw4md6685aUzjG/preview" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+        <div class="video-label">
+          <h3>איך בוחרים את הפתרון הנכון?</h3>
+          <p>מדריך לבחירת הפתרון המתאים למשפחה שלכם</p>
+        </div>
+      </div>
+      <div class="video-wrap">
+        <iframe src="https://drive.google.com/file/d/1whSd28RM-FS_RYQU-Yc12qI2GtNqckIJ/preview" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+        <div class="video-label">
+          <h3>סינון תוכן — עקרונות ושיטות</h3>
+          <p>הבנה כללית של שיטות סינון תוכן</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTIONS ACCORDION -->
+  <section style="background: var(--cream-alt);">
+    <div class="section">
+      <div class="section-title">
+        <span class="badge">השוואת פתרונות</span>
+        <h2>לחצו על כל פתרון לפרטים מלאים וסרטון הדרכה</h2>
+      </div>
+
+      <div class="accordion-list">
+
+        <!-- גולשים בזמן -->
+        <div class="accordion-item">
+          <div class="acc-header" onclick="toggleAcc(this)">
+            <div class="acc-icon" style="background:#E8F5E9;">🖥️</div>
+            <div class="acc-header-text">
+              <h3>גולשים בזמן</h3>
+              <div class="acc-tags">
+                <span class="acc-tag">Windows</span>
+                <span class="acc-tag">ילדים ונוער</span>
+                <span class="acc-tag">עברית</span>
+              </div>
+            </div>
+            <span class="acc-badge-new">חדש</span>
+            <div class="acc-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <div class="acc-grid">
+                <div class="acc-info">
+                  <div class="acc-meta">
+                    <div class="acc-meta-row"><span class="label">קהל יעד:</span><span class="val">ילדים ונוער</span></div>
+                    <div class="acc-meta-row"><span class="label">מכשירים:</span><span class="val">Windows בלבד</span></div>
+                    <div class="acc-meta-row"><span class="label">שפה:</span><span class="val">עברית</span></div>
+                  </div>
+                  <div class="acc-pros"><strong>יתרון בולט:</strong> הגנה ברמה גבוהה על תכנים בעייתיים, ניהול זמן מסך יעיל, דיווח מקיף</div>
+                  <div class="acc-cons"><strong>חסרון בולט:</strong> קל לעקוף את ההגנה, אין דיווח מספק</div>
+                  <ul class="feature-list">
+                    <li><span class="chk">✓</span> ניהול זמן מסך כללי</li>
+                    <li><span class="chk">✓</span> ניהול זמן מסך לאפליקציות</li>
+                    <li><span class="chk">✓</span> חסימת גישה לאפליקציות ואתרים</li>
+                    <li><span class="chk">✓</span> חסימת גישה לתכנים בעייתיים</li>
+                    <li><span class="xmk">✗</span> חיפוש בטוח</li>
+                    <li><span class="chk">✓</span> דיווח ומעקב</li>
+                  </ul>
+                </div>
+                <div class="acc-video">
+                  <iframe src="https://drive.google.com/file/d/1xCJi9-j-Iy1JyKgpYq8_ZYTPjnAYpwKR/preview" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Apple Screen Time -->
+        <div class="accordion-item">
+          <div class="acc-header" onclick="toggleAcc(this)">
+            <div class="acc-icon" style="background:#F3E8FF;">🍎</div>
+            <div class="acc-header-text">
+              <h3>Apple Screen Time</h3>
+              <div class="acc-tags">
+                <span class="acc-tag">iOS בלבד</span>
+                <span class="acc-tag">ילדים ומשפחות</span>
+                <span class="acc-tag">עברית, אנגלית</span>
+              </div>
+            </div>
+            <div class="acc-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <div class="acc-grid">
+                <div class="acc-info">
+                  <div class="acc-meta">
+                    <div class="acc-meta-row"><span class="label">קהל יעד:</span><span class="val">ילדים ומשפחות</span></div>
+                    <div class="acc-meta-row"><span class="label">מכשירים:</span><span class="val">iOS בלבד</span></div>
+                    <div class="acc-meta-row"><span class="label">שפה:</span><span class="val">עברית, אנגלית</span></div>
+                  </div>
+                  <div class="acc-pros"><strong>יתרון בולט:</strong> מערכת ניהול מובנית, קל לשימוש</div>
+                  <div class="acc-cons"><strong>חסרון בולט:</strong> לא מספק הגנה מלאה על תכנים בעייתיים</div>
+                  <ul class="feature-list">
+                    <li><span class="chk">✓</span> ניהול זמן מסך כללי</li>
+                    <li><span class="chk">✓</span> ניהול זמן מסך לאפליקציות</li>
+                    <li><span class="chk">✓</span> חסימת גישה לאפליקציות ואתרים</li>
+                    <li><span class="chk">✓</span> חסימת גישה לתכנים בעייתיים</li>
+                    <li><span class="chk">✓</span> חיפוש בטוח</li>
+                    <li><span class="chk">✓</span> דיווח ומעקב</li>
+                  </ul>
+                </div>
+                <div class="acc-video">
+                  <iframe src="https://drive.google.com/file/d/14HUVE-E4YD9bxvWNWrP22JecYt3UiR9x/preview" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Google Family Link -->
+        <div class="accordion-item">
+          <div class="acc-header" onclick="toggleAcc(this)">
+            <div class="acc-icon" style="background:#E3F2FD;">🔗</div>
+            <div class="acc-header-text">
+              <h3>Google Family Link</h3>
+              <div class="acc-tags">
+                <span class="acc-tag">אנדרואיד / Chrome OS</span>
+                <span class="acc-tag">ילדים עד גיל 13</span>
+                <span class="acc-tag">עברית, אנגלית</span>
+              </div>
+            </div>
+            <div class="acc-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <div class="acc-grid">
+                <div class="acc-info">
+                  <div class="acc-meta">
+                    <div class="acc-meta-row"><span class="label">קהל יעד:</span><span class="val">ילדים עד גיל 13</span></div>
+                    <div class="acc-meta-row"><span class="label">מכשירים:</span><span class="val">אנדרואיד, Chrome OS</span></div>
+                    <div class="acc-meta-row"><span class="label">שפה:</span><span class="val">עברית, אנגלית</span></div>
+                  </div>
+                  <div class="acc-pros"><strong>יתרון בולט:</strong> מערכת ניהול מובנית, קל לשימוש</div>
+                  <div class="acc-cons"><strong>חסרון בולט:</strong> לא מספק הגנה מלאה על תכנים בעייתיים</div>
+                  <ul class="feature-list">
+                    <li><span class="chk">✓</span> ניהול זמן מסך כללי</li>
+                    <li><span class="chk">✓</span> ניהול זמן מסך לאפליקציות</li>
+                    <li><span class="chk">✓</span> חסימת גישה לאפליקציות ואתרים</li>
+                    <li><span class="chk">✓</span> חסימת גישה לתכנים בעייתיים</li>
+                    <li><span class="chk">✓</span> חיפוש בטוח</li>
+                    <li><span class="chk">✓</span> דיווח ומעקב</li>
+                  </ul>
+                </div>
+                <div class="acc-video">
+                  <iframe src="https://drive.google.com/file/d/1oUGMYYEYgCkQn1ICRsUUSvhzJSFR8I8t/preview" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Surfie -->
+        <div class="accordion-item">
+          <div class="acc-header" onclick="toggleAcc(this)">
+            <div class="acc-icon" style="background:#E0F7FA;">🏄</div>
+            <div class="acc-header-text">
+              <h3>Surfie</h3>
+              <div class="acc-tags">
+                <span class="acc-tag">אנדרואיד / iOS</span>
+                <span class="acc-tag">מגיל 6 ומעלה</span>
+                <span class="acc-tag">עברית, אנגלית</span>
+              </div>
+            </div>
+            <span class="acc-badge-new">חדש</span>
+            <div class="acc-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <div class="acc-grid">
+                <div class="acc-info">
+                  <div class="acc-meta">
+                    <div class="acc-meta-row"><span class="label">קהל יעד:</span><span class="val">ילדים מגיל 6 ומעלה</span></div>
+                    <div class="acc-meta-row"><span class="label">מכשירים:</span><span class="val">אנדרואיד, iOS</span></div>
+                    <div class="acc-meta-row"><span class="label">שפה:</span><span class="val">עברית, אנגלית</span></div>
+                  </div>
+                  <div class="acc-pros"><strong>יתרון בולט:</strong> מגוון רחב של הגדרות סינון, ניהול זמן מסך יעיל</div>
+                  <div class="acc-cons"><strong>חסרון בולט:</strong> קל לעקוף את ההגנה, אין דיווח מספק</div>
+                  <ul class="feature-list">
+                    <li><span class="chk">✓</span> ניהול זמן מסך כללי</li>
+                    <li><span class="chk">✓</span> ניהול זמן מסך לאפליקציות</li>
+                    <li><span class="chk">✓</span> חסימת גישה לאפליקציות ואתרים</li>
+                    <li><span class="xmk">✗</span> חסימת גישה לתכנים בעייתיים</li>
+                    <li><span class="xmk">✗</span> חיפוש בטוח</li>
+                    <li><span class="chk">✓</span> דיווח ומעקב</li>
+                  </ul>
+                </div>
+                <div class="acc-video">
+                  <iframe src="https://drive.google.com/file/d/1_OU5F9x4GY39uNheShNGTOpomEP_-O2o/preview" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kid Security -->
+        <div class="accordion-item">
+          <div class="acc-header" onclick="toggleAcc(this)">
+            <div class="acc-icon" style="background:#FFF3E0;">👶</div>
+            <div class="acc-header-text">
+              <h3>Kid Security</h3>
+              <div class="acc-tags">
+                <span class="acc-tag">אנדרואיד בלבד</span>
+                <span class="acc-tag">ילדים קטנים</span>
+                <span class="acc-tag">עברית, אנגלית, ספרדית</span>
+              </div>
+            </div>
+            <div class="acc-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <div class="acc-grid">
+                <div class="acc-info">
+                  <div class="acc-meta">
+                    <div class="acc-meta-row"><span class="label">קהל יעד:</span><span class="val">ילדים קטנים מאוד</span></div>
+                    <div class="acc-meta-row"><span class="label">מכשירים:</span><span class="val">אנדרואיד בלבד</span></div>
+                    <div class="acc-meta-row"><span class="label">שפה:</span><span class="val">עברית, אנגלית, ספרדית</span></div>
+                  </div>
+                  <div class="acc-pros"><strong>יתרון בולט:</strong> תקשורת איכותית, ניהול זמני שימוש יעיל</div>
+                  <div class="acc-cons"><strong>חסרון בולט:</strong> קל לעקוף</div>
+                  <ul class="feature-list">
+                    <li><span class="chk">✓</span> ניהול זמן מסך כללי</li>
+                    <li><span class="chk">✓</span> ניהול זמן מסך לאפליקציות</li>
+                    <li><span class="chk">✓</span> חסימת גישה לאפליקציות ואתרים</li>
+                    <li><span class="xmk">✗</span> חסימת גישה לתכנים בעייתיים</li>
+                    <li><span class="xmk">✗</span> חיפוש בטוח</li>
+                    <li><span class="chk">✓</span> דיווח ומעקב</li>
+                  </ul>
+                </div>
+                <div class="acc-video">
+                  <iframe src="https://drive.google.com/file/d/17rP_XBjIyjsfPEh03YFgCs6dAqBZJGsL/preview" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stay Focused -->
+        <div class="accordion-item">
+          <div class="acc-header" onclick="toggleAcc(this)">
+            <div class="acc-icon" style="background:#F1F8E9;">🎯</div>
+            <div class="acc-header-text">
+              <h3>Stay Focused</h3>
+              <div class="acc-tags">
+                <span class="acc-tag">אנדרואיד</span>
+                <span class="acc-tag">מבוגרים</span>
+                <span class="acc-tag">אנגלית</span>
+              </div>
+            </div>
+            <span class="acc-badge-new">חדש</span>
+            <div class="acc-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <div class="acc-grid">
+                <div class="acc-info">
+                  <div class="acc-meta">
+                    <div class="acc-meta-row"><span class="label">קהל יעד:</span><span class="val">מבוגרים</span></div>
+                    <div class="acc-meta-row"><span class="label">מכשירים:</span><span class="val">אנדרואיד</span></div>
+                    <div class="acc-meta-row"><span class="label">שפה:</span><span class="val">אנגלית, ויאטנמית, אחרות</span></div>
+                  </div>
+                  <div class="acc-pros"><strong>יתרון בולט:</strong> כלי התקנה קל ואינטואיטיבי, מתאים לייעול זמן שימוש עצמי</div>
+                  <div class="acc-cons"><strong>חסרון בולט:</strong> אין מנגנון הגנה חסין לחלוטין המונע הסרת האפליקציה</div>
+                  <ul class="feature-list">
+                    <li><span class="chk">✓</span> ניהול זמן מסך כללי</li>
+                    <li><span class="chk">✓</span> ניהול זמן מסך לאפליקציות</li>
+                    <li><span class="chk">✓</span> חסימת גישה לאפליקציות ואתרים</li>
+                    <li><span class="chk">✓</span> חסימת גישה לתכנים בעייתיים</li>
+                    <li><span class="chk">✓</span> חיפוש בטוח</li>
+                    <li><span class="chk">✓</span> דיווח ומעקב</li>
+                  </ul>
+                </div>
+                <div class="acc-video">
+                  <iframe src="https://drive.google.com/file/d/1aJTaGCKl3rbcAZ2CGbtaWpq6qnKQoTsc/preview" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /accordion-list -->
+    </div>
+  </section>
+
+  <!-- MOKED OR VIDEO -->
+  <section class="section">
+    <div class="section-title">
+      <span class="badge">ייעוץ מקצועי</span>
+      <h2>מוקד אור — ליווי טכנולוגי אישי למשפחות</h2>
+    </div>
+    <div class="video-wrap" style="max-width:700px; margin:0 auto;">
+      <iframe src="https://drive.google.com/file/d/15zLUGhXQTcv5U1U6-TXz6tY0sQ0ZgpyN/preview" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+      <div class="video-label">
+        <h3>מוקד אור — ייעוץ טכנולוגי אישי</h3>
+        <p>סינון, חסימות, ניטור, בקרת הורים — ליווי בהתאמה אישית</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>צריכים עזרה מקצועית?</h2>
+    <p>המומחים של מוקד אור זמינים לייעוץ אישי — התקנה, סינון, ניטור והגנה מלאה</p>
+    <a href="tel:073-321-2723" class="cta-btn">
+      <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      ייעוץ עם מוקד אור
+    </a>
+    <a href="tel:073-321-2723" class="cta-phone">073-321-2723</a>
+  </section>
+
+  <footer class="footer">
+    <p><a href="https://mmb.org.il" target="_blank">לוקחים אחריות</a> — משנים מציאות ברשת | בשיתוף <a href="tel:073-321-2723">מוקד אור</a> — ייעוץ והדרכה בנייני מגינות</p>
+  </footer>
+
+  <!-- Floating CTA -->
+  <a href="tel:073-321-2723" class="floating-cta">
+    <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+    073-321-2723
+  </a>
+
+  <script>
+    function toggleAcc(header) {
+      const item = header.closest('.accordion-item');
+      const body = item.querySelector('.acc-body');
+      const isOpen = item.classList.contains('open');
+
+      // Close all others
+      document.querySelectorAll('.accordion-item.open').forEach(other => {
+        if (other !== item) {
+          other.classList.remove('open');
+          other.querySelector('.acc-body').style.maxHeight = '0';
+        }
+      });
+
+      if (isOpen) {
+        item.classList.remove('open');
+        body.style.maxHeight = '0';
+      } else {
+        item.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        // Smooth scroll into view
+        setTimeout(() => {
+          item.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
+    }
+  </script>
+
+</body>
+</html>
